@@ -1,0 +1,17 @@
+CódigoProducto,Nombre,Categoría,Marca,Descripción,PrecioUnitario,CantidadStock
+1,"Lechuga Romana","Alimentos frescos","Kultiva","Lechuga romana fresca, ideal para ensaladas y platos saludables",1.99,50
+2,"Manzanas Granny Smith","Frutas y verduras","Dispersa","Manzanas verdes Granny Smith, jugosas y refrescantes",0.99,80
+3,"Filete de salmón","Carnes y pescados","Pollo Rey","Filete de salmón fresco, rico en omega-3 y perfecto para asar o cocinar al horno",9.99,30
+4,"Queso cheddar","Productos lácteos","Dos Pinos","Queso cheddar madurado, cremoso y lleno de sabor",3.49,40
+5,"Pan integral","Panadería y repostería","Bimbo","Pan integral recién horneado, saludable y delicioso",2.49,60
+6,"Pizza Margarita","Congelados","FUD","Pizza Margarita con salsa de tomate, mozzarella y albahaca, lista para hornear",4.99,25
+7,"Tomates enlatados","Conservas y enlatados","Multifresh","Tomates pelados enlatados, perfectos para salsas y guisos",1.29,70
+8,"Arroz blanco","Productos de despensa","Molinero","Arroz blanco de grano largo, versátil y fácil de cocinar",2.99,90
+9,"Refresco de cola","Bebidas","Coca-Cola","Refresco de cola carbonatado y refrescante",1.49,100
+10,"Papas fritas","Snacks y golosinas","Frito Lay","Papas fritas crujientes y sabrosas, perfectas para picar",1.79,120
+11,"Detergente líquido","Productos de limpieza","FAB","Detergente líquido para ropa, elimina las manchas y deja un fresco aroma",5.99,35
+12,"Jabón de baño","Artículos de cuidado personal","Protex","Jabón de baño en barra, suave y humectante para una piel suave y fresca",0.99,65
+13,"Comida para gatos","Productos para mascotas","Felix","Comida para gatos en lata, nutritiva y deliciosa",0.89,55
+14,"Papel higiénico","Artículos para el hogar","Suli","Papel higiénico de doble capa, suave y absorbente",3.99,75
+15,"Cepillo de dientes","Productos de higiene personal","Colgate","Cepillo de dientes con cerdas suaves y mango ergonómico",1.29,150
+16,"Aceite de oliva extra virgen","Otros","Great Value","Aceite de oliva extra virgen, prensado en frío y de alta calidad",6.99,45

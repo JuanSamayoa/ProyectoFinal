@@ -1,0 +1,6 @@
+Usuario,Contraseña,Tipo,Nombre,Apellido,CUI/Pasaporte,Teléfono,CorreoElectrónico,Dirección
+admin,admin,Administrador,Administrador,WebMaster,0000000000101,50005000,admin@supermercado.com,"direccion casa"
+operador,operador,Operador,Juan,Samayoa,3003784320101,50005000,jesamayoa@supermercado.com,"19 calle B 31-60"
+pedrom,pedro,Operador,Pedro,Marquez,3003784320101,50342840,jesamayoa@gmail.com.gt,"19 calle c 41-20 zona 7 el milagro"
+juliov,julio,Administrador,Julio,Velasquez,3003784320101,55005500,juvel@gmail.com,"11 ave a 16-26 col atlantida"
+manuel,manuel1,Operador,Manuel,Perez,2843242050108,5555559,a@a.com,"direcccion"
