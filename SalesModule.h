@@ -9,24 +9,15 @@ namespace ProyectoFinal {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	/// <summary>
-	/// Resumen de SalesModule
-	/// </summary>
 	public ref class SalesModule : public System::Windows::Forms::Form
 	{
 	public:
 		SalesModule(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Limpiar los recursos que se estén usando.
-		/// </summary>
 		~SalesModule()
 		{
 			if (components)
@@ -43,11 +34,7 @@ namespace ProyectoFinal {
 
 
 
-	private:
-		/// <summary>
-		/// Variable del diseñador necesaria.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+	private: ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -103,13 +90,15 @@ namespace ProyectoFinal {
 			this->Name = L"SalesModule";
 			this->Text = L"SalesModule";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
+			this->Load += gcnew System::EventHandler(this, &SalesModule::SalesModule_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->shoppingCartDataGridView))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	private: Void SalesModule_Load(Object^ sender, EventArgs^ e) {
+
 	}
-};
+	};
 }
