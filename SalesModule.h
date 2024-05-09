@@ -41,17 +41,13 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::Label^ clientPhoneNumberLabel;
 	private: System::Windows::Forms::Label^ clientBillingDataLabel;
 	private: System::Windows::Forms::Label^ clientAddress;
-
-
-
-
-
 	private: Cliente^ selectedClient; // Variable para almacenar el cliente seleccionado
+	private: System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// M閠odo necesario para admitir el Dise馻dor. No se puede modificar
-		/// el contenido de este m閠odo con el editor de c骴igo.
+		/// M茅todo necesario para admitir el Dise帽ador. No se puede modificar
+		/// el contenido de este m茅todo con el editor de c贸digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -123,7 +119,7 @@ namespace ProyectoFinal {
 			this->clientAddressLabel->Name = L"clientAddressLabel";
 			this->clientAddressLabel->Size = System::Drawing::Size(58, 13);
 			this->clientAddressLabel->TabIndex = 5;
-			this->clientAddressLabel->Text = L"Direcci髇: ";
+			this->clientAddressLabel->Text = L"Direcci贸n: ";
 			// 
 			// clientEmail
 			// 
@@ -141,7 +137,7 @@ namespace ProyectoFinal {
 			this->clientEmailLabel->Name = L"clientEmailLabel";
 			this->clientEmailLabel->Size = System::Drawing::Size(100, 13);
 			this->clientEmailLabel->TabIndex = 9;
-			this->clientEmailLabel->Text = L"Correo Electr髇ico: ";
+			this->clientEmailLabel->Text = L"Correo Electr贸nico: ";
 			// 
 			// clientPhoneNumber
 			// 
@@ -159,7 +155,7 @@ namespace ProyectoFinal {
 			this->clientPhoneNumberLabel->Name = L"clientPhoneNumberLabel";
 			this->clientPhoneNumberLabel->Size = System::Drawing::Size(55, 13);
 			this->clientPhoneNumberLabel->TabIndex = 7;
-			this->clientPhoneNumberLabel->Text = L"Tel閒ono: ";
+			this->clientPhoneNumberLabel->Text = L"Tel茅fono: ";
 			// 
 			// clientBillingDataLabel
 			// 
@@ -170,7 +166,7 @@ namespace ProyectoFinal {
 			this->clientBillingDataLabel->Name = L"clientBillingDataLabel";
 			this->clientBillingDataLabel->Size = System::Drawing::Size(152, 19);
 			this->clientBillingDataLabel->TabIndex = 15;
-			this->clientBillingDataLabel->Text = L"Datos de facturaci髇";
+			this->clientBillingDataLabel->Text = L"Datos de facturaci贸n";
 			// 
 			// clientAddress
 			// 
@@ -234,7 +230,7 @@ namespace ProyectoFinal {
 			// Asigna el cliente seleccionado a la variable selectedClient
 			selectedClient = clientsForm->SelectedClient;
 
-			// Utilizar los datos del cliente seleccionado seg鷑 sea necesario
+			// Utilizar los datos del cliente seleccionado seg煤n sea necesario
 			int codigoCliente = selectedClient->Codigo;
 			String^ nombre = selectedClient->Nombre;
 			String^ direccion = selectedClient->Direccion;
