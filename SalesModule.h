@@ -26,15 +26,10 @@ namespace ProyectoFinal {
 			}
 		}
 	private: System::Windows::Forms::DataGridView^ shoppingCartDataGridView;
-	protected:
-
-	protected:
 	private: System::Windows::Forms::Label^ shoppingCartLabel;
 	private: System::Windows::Forms::Button^ addProductToCartButton;
 
-
-
-	private: ComponentModel::Container ^components;
+	private: System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
