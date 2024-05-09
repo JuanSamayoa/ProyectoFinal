@@ -1,4 +1,6 @@
 #pragma once
+#include "Clients.h"
+#include "Cliente.h"
 
 namespace ProyectoFinal {
 
@@ -28,19 +30,39 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::DataGridView^ shoppingCartDataGridView;
 	private: System::Windows::Forms::Label^ shoppingCartLabel;
 	private: System::Windows::Forms::Button^ addProductToCartButton;
-
+	private: System::ComponentModel::Container ^components;
+	private: Clients^ clientsForm;
+	private: System::Windows::Forms::Label^ clientNameLabel;
+	private: System::Windows::Forms::Label^ clientName;
+	private: System::Windows::Forms::Label^ clientAddressLabel;
+	private: System::Windows::Forms::Label^ clientEmail;
+	private: System::Windows::Forms::Label^ clientEmailLabel;
+	private: System::Windows::Forms::Label^ clientPhoneNumber;
+	private: System::Windows::Forms::Label^ clientPhoneNumberLabel;
+	private: System::Windows::Forms::Label^ clientBillingDataLabel;
+	private: System::Windows::Forms::Label^ clientAddress;
+	private: Cliente^ selectedClient; // Variable para almacenar el cliente seleccionado
 	private: System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// M閠odo necesario para admitir el Dise馻dor. No se puede modificar
-		/// el contenido de este m閠odo con el editor de c骴igo.
+		/// M茅todo necesario para admitir el Dise帽ador. No se puede modificar
+		/// el contenido de este m茅todo con el editor de c贸digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->shoppingCartDataGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->shoppingCartLabel = (gcnew System::Windows::Forms::Label());
 			this->addProductToCartButton = (gcnew System::Windows::Forms::Button());
+			this->clientNameLabel = (gcnew System::Windows::Forms::Label());
+			this->clientName = (gcnew System::Windows::Forms::Label());
+			this->clientAddressLabel = (gcnew System::Windows::Forms::Label());
+			this->clientEmail = (gcnew System::Windows::Forms::Label());
+			this->clientEmailLabel = (gcnew System::Windows::Forms::Label());
+			this->clientPhoneNumber = (gcnew System::Windows::Forms::Label());
+			this->clientPhoneNumberLabel = (gcnew System::Windows::Forms::Label());
+			this->clientBillingDataLabel = (gcnew System::Windows::Forms::Label());
+			this->clientAddress = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->shoppingCartDataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -72,12 +94,104 @@ namespace ProyectoFinal {
 			this->addProductToCartButton->Text = L"Seleccionar producto(s)";
 			this->addProductToCartButton->UseVisualStyleBackColor = true;
 			// 
+			// clientNameLabel
+			// 
+			this->clientNameLabel->AutoSize = true;
+			this->clientNameLabel->Location = System::Drawing::Point(65, 37);
+			this->clientNameLabel->Name = L"clientNameLabel";
+			this->clientNameLabel->Size = System::Drawing::Size(45, 13);
+			this->clientNameLabel->TabIndex = 3;
+			this->clientNameLabel->Text = L"Cliente: ";
+			// 
+			// clientName
+			// 
+			this->clientName->AutoSize = true;
+			this->clientName->Location = System::Drawing::Point(116, 37);
+			this->clientName->Name = L"clientName";
+			this->clientName->Size = System::Drawing::Size(39, 13);
+			this->clientName->TabIndex = 4;
+			this->clientName->Text = L"Cliente";
+			// 
+			// clientAddressLabel
+			// 
+			this->clientAddressLabel->AutoSize = true;
+			this->clientAddressLabel->Location = System::Drawing::Point(52, 63);
+			this->clientAddressLabel->Name = L"clientAddressLabel";
+			this->clientAddressLabel->Size = System::Drawing::Size(58, 13);
+			this->clientAddressLabel->TabIndex = 5;
+			this->clientAddressLabel->Text = L"Direcci贸n: ";
+			// 
+			// clientEmail
+			// 
+			this->clientEmail->AutoSize = true;
+			this->clientEmail->Location = System::Drawing::Point(116, 118);
+			this->clientEmail->Name = L"clientEmail";
+			this->clientEmail->Size = System::Drawing::Size(32, 13);
+			this->clientEmail->TabIndex = 6;
+			this->clientEmail->Text = L"Email";
+			// 
+			// clientEmailLabel
+			// 
+			this->clientEmailLabel->AutoSize = true;
+			this->clientEmailLabel->Location = System::Drawing::Point(10, 118);
+			this->clientEmailLabel->Name = L"clientEmailLabel";
+			this->clientEmailLabel->Size = System::Drawing::Size(100, 13);
+			this->clientEmailLabel->TabIndex = 9;
+			this->clientEmailLabel->Text = L"Correo Electr贸nico: ";
+			// 
+			// clientPhoneNumber
+			// 
+			this->clientPhoneNumber->AutoSize = true;
+			this->clientPhoneNumber->Location = System::Drawing::Point(116, 91);
+			this->clientPhoneNumber->Name = L"clientPhoneNumber";
+			this->clientPhoneNumber->Size = System::Drawing::Size(44, 13);
+			this->clientPhoneNumber->TabIndex = 8;
+			this->clientPhoneNumber->Text = L"Numero";
+			// 
+			// clientPhoneNumberLabel
+			// 
+			this->clientPhoneNumberLabel->AutoSize = true;
+			this->clientPhoneNumberLabel->Location = System::Drawing::Point(55, 91);
+			this->clientPhoneNumberLabel->Name = L"clientPhoneNumberLabel";
+			this->clientPhoneNumberLabel->Size = System::Drawing::Size(55, 13);
+			this->clientPhoneNumberLabel->TabIndex = 7;
+			this->clientPhoneNumberLabel->Text = L"Tel茅fono: ";
+			// 
+			// clientBillingDataLabel
+			// 
+			this->clientBillingDataLabel->AutoSize = true;
+			this->clientBillingDataLabel->Font = (gcnew System::Drawing::Font(L"Lato", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->clientBillingDataLabel->Location = System::Drawing::Point(29, 9);
+			this->clientBillingDataLabel->Name = L"clientBillingDataLabel";
+			this->clientBillingDataLabel->Size = System::Drawing::Size(152, 19);
+			this->clientBillingDataLabel->TabIndex = 15;
+			this->clientBillingDataLabel->Text = L"Datos de facturaci贸n";
+			// 
+			// clientAddress
+			// 
+			this->clientAddress->AutoSize = true;
+			this->clientAddress->Location = System::Drawing::Point(116, 63);
+			this->clientAddress->Name = L"clientAddress";
+			this->clientAddress->Size = System::Drawing::Size(52, 13);
+			this->clientAddress->TabIndex = 16;
+			this->clientAddress->Text = L"Direccion";
+			// 
 			// SalesModule
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(740, 460);
 			this->ControlBox = false;
+			this->Controls->Add(this->clientAddress);
+			this->Controls->Add(this->clientBillingDataLabel);
+			this->Controls->Add(this->clientEmailLabel);
+			this->Controls->Add(this->clientPhoneNumber);
+			this->Controls->Add(this->clientPhoneNumberLabel);
+			this->Controls->Add(this->clientEmail);
+			this->Controls->Add(this->clientAddressLabel);
+			this->Controls->Add(this->clientName);
+			this->Controls->Add(this->clientNameLabel);
 			this->Controls->Add(this->addProductToCartButton);
 			this->Controls->Add(this->shoppingCartLabel);
 			this->Controls->Add(this->shoppingCartDataGridView);
@@ -93,7 +207,42 @@ namespace ProyectoFinal {
 		}
 #pragma endregion
 	private: Void SalesModule_Load(Object^ sender, EventArgs^ e) {
-
+		clientsForm = gcnew Clients();
+		clientFormInitialProperties();
+		retrieveSelectedClient();
+		clientsForm->SelectClientButtonVisbility(false);
 	}
-	};
+
+	private: Void clientFormInitialProperties() {
+		clientsForm->ControlBox = true;
+		clientsForm->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Sizable;
+		clientsForm->StartPosition = FormStartPosition::CenterScreen;
+		clientsForm->WindowState = FormWindowState::Normal;
+		clientsForm->TopMost = true;
+	}
+
+	private: Void retrieveSelectedClient() {
+		// Mostrar el formulario de clientes
+		clientsForm->Show();
+
+		// Verificar si se ha seleccionado un cliente en el formulario de clientes
+		if (clientsForm->SelectedClient != nullptr) {
+			// Asigna el cliente seleccionado a la variable selectedClient
+			selectedClient = clientsForm->SelectedClient;
+
+			// Utilizar los datos del cliente seleccionado seg煤n sea necesario
+			int codigoCliente = selectedClient->Codigo;
+			String^ nombre = selectedClient->Nombre;
+			String^ direccion = selectedClient->Direccion;
+			String^ telefono = selectedClient->Telefono;
+			String^ correoElectronico = selectedClient->CorreoElectronico;
+
+			// Asignar los datos del cliente seleccionado a los controles de la interfaz de usuario
+			clientName->Text = nombre;
+			clientAddress->Text = direccion;
+			clientPhoneNumber->Text = telefono;
+			clientEmail->Text = correoElectronico;
+		}
+	}
+};
 }

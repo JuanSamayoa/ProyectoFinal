@@ -1,5 +1,6 @@
 #pragma once
 #include "GlobalVariables.h"
+#include "Cliente.h"
 
 namespace ProyectoFinal {
 
@@ -24,6 +25,14 @@ namespace ProyectoFinal {
 		void ModifyCustomerViewData(DataGridView^ grid); //Modifica los datos del archivo CSV al momento de realizar alguna accion
 		bool IsFileOpen(String^ filePath); //Verifica que el archivo no haya sido abierto por otro programa
 
+		property Cliente^ SelectedClient; //Propiedad para obtener el cliente seleccionado
+
+	public:
+		property int Codigo;
+		property String^ Nombre;
+		property String^ Direccion;
+		property String^ Telefono;
+		property String^ CorreoElectronico;
 	protected:
 		~Clients()
 		{
@@ -54,7 +63,7 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::TextBox^ clientCodeText;
 	private: System::Windows::Forms::Label^ saveReminderLabel;
 	private: System::Windows::Forms::Button^ clearButton;
-
+	private: System::Windows::Forms::Button^ selectClientButton;
 
 	//Variable de ruta del archivo CSV
 	private: String^ filePath = "data\\Clientes.csv";
@@ -67,6 +76,7 @@ namespace ProyectoFinal {
 		void InitializeComponent(void)
 		{
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->clearButton = (gcnew System::Windows::Forms::Button());
 			this->clientCodeLabel = (gcnew System::Windows::Forms::Label());
 			this->clientCodeText = (gcnew System::Windows::Forms::TextBox());
 			this->clientEmailText = (gcnew System::Windows::Forms::TextBox());
@@ -84,7 +94,7 @@ namespace ProyectoFinal {
 			this->addClientButton = (gcnew System::Windows::Forms::Button());
 			this->clientsDataGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->saveReminderLabel = (gcnew System::Windows::Forms::Label());
-			this->clearButton = (gcnew System::Windows::Forms::Button());
+			this->selectClientButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			this->actionControlBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->clientsDataGridView))->BeginInit();
@@ -92,6 +102,7 @@ namespace ProyectoFinal {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->selectClientButton);
 			this->groupBox1->Controls->Add(this->clearButton);
 			this->groupBox1->Controls->Add(this->clientCodeLabel);
 			this->groupBox1->Controls->Add(this->clientCodeText);
@@ -109,6 +120,16 @@ namespace ProyectoFinal {
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Informacion del cliente";
+			// 
+			// clearButton
+			// 
+			this->clearButton->Location = System::Drawing::Point(252, 19);
+			this->clearButton->Name = L"clearButton";
+			this->clearButton->Size = System::Drawing::Size(75, 23);
+			this->clearButton->TabIndex = 108;
+			this->clearButton->Text = L"Limpiar";
+			this->clearButton->UseVisualStyleBackColor = true;
+			this->clearButton->Click += gcnew System::EventHandler(this, &Clients::clearButton_Click);
 			// 
 			// clientCodeLabel
 			// 
@@ -130,7 +151,7 @@ namespace ProyectoFinal {
 			// 
 			// clientEmailText
 			// 
-			this->clientEmailText->Location = System::Drawing::Point(113, 191);
+			this->clientEmailText->Location = System::Drawing::Point(113, 165);
 			this->clientEmailText->MaxLength = 30;
 			this->clientEmailText->Name = L"clientEmailText";
 			this->clientEmailText->Size = System::Drawing::Size(155, 20);
@@ -138,7 +159,7 @@ namespace ProyectoFinal {
 			// 
 			// clientPhoneText
 			// 
-			this->clientPhoneText->Location = System::Drawing::Point(113, 150);
+			this->clientPhoneText->Location = System::Drawing::Point(113, 134);
 			this->clientPhoneText->MaxLength = 8;
 			this->clientPhoneText->Name = L"clientPhoneText";
 			this->clientPhoneText->Size = System::Drawing::Size(155, 20);
@@ -146,7 +167,7 @@ namespace ProyectoFinal {
 			// 
 			// clientAddressText
 			// 
-			this->clientAddressText->Location = System::Drawing::Point(113, 112);
+			this->clientAddressText->Location = System::Drawing::Point(113, 104);
 			this->clientAddressText->MaxLength = 50;
 			this->clientAddressText->Name = L"clientAddressText";
 			this->clientAddressText->Size = System::Drawing::Size(155, 20);
@@ -163,7 +184,7 @@ namespace ProyectoFinal {
 			// clientEmailLabel
 			// 
 			this->clientEmailLabel->AutoSize = true;
-			this->clientEmailLabel->Location = System::Drawing::Point(6, 194);
+			this->clientEmailLabel->Location = System::Drawing::Point(6, 168);
 			this->clientEmailLabel->Name = L"clientEmailLabel";
 			this->clientEmailLabel->Size = System::Drawing::Size(96, 13);
 			this->clientEmailLabel->TabIndex = 4;
@@ -172,7 +193,7 @@ namespace ProyectoFinal {
 			// clientPhoneLabel
 			// 
 			this->clientPhoneLabel->AutoSize = true;
-			this->clientPhoneLabel->Location = System::Drawing::Point(30, 153);
+			this->clientPhoneLabel->Location = System::Drawing::Point(30, 137);
 			this->clientPhoneLabel->Name = L"clientPhoneLabel";
 			this->clientPhoneLabel->Size = System::Drawing::Size(72, 13);
 			this->clientPhoneLabel->TabIndex = 3;
@@ -181,7 +202,7 @@ namespace ProyectoFinal {
 			// clientAddressLabel
 			// 
 			this->clientAddressLabel->AutoSize = true;
-			this->clientAddressLabel->Location = System::Drawing::Point(47, 115);
+			this->clientAddressLabel->Location = System::Drawing::Point(47, 107);
 			this->clientAddressLabel->Name = L"clientAddressLabel";
 			this->clientAddressLabel->Size = System::Drawing::Size(55, 13);
 			this->clientAddressLabel->TabIndex = 2;
@@ -272,15 +293,15 @@ namespace ProyectoFinal {
 			this->saveReminderLabel->TabIndex = 101;
 			this->saveReminderLabel->Text = L"Recuerda siempre guardar tus cambios \r\npara que sean reflejados*";
 			// 
-			// clearButton
+			// selectClientButton
 			// 
-			this->clearButton->Location = System::Drawing::Point(252, 19);
-			this->clearButton->Name = L"clearButton";
-			this->clearButton->Size = System::Drawing::Size(75, 23);
-			this->clearButton->TabIndex = 108;
-			this->clearButton->Text = L"Limpiar";
-			this->clearButton->UseVisualStyleBackColor = true;
-			this->clearButton->Click += gcnew System::EventHandler(this, &Clients::clearButton_Click);
+			this->selectClientButton->Location = System::Drawing::Point(207, 213);
+			this->selectClientButton->Name = L"selectClientButton";
+			this->selectClientButton->Size = System::Drawing::Size(127, 23);
+			this->selectClientButton->TabIndex = 109;
+			this->selectClientButton->Text = L"Seleccionar Cliente";
+			this->selectClientButton->UseVisualStyleBackColor = true;
+			this->selectClientButton->Click += gcnew System::EventHandler(this, &Clients::selectClientButton_Click);
 			// 
 			// Clients
 			// 
@@ -309,6 +330,16 @@ namespace ProyectoFinal {
 		}
 #pragma endregion
 	
+	public:
+		Void Clients::SelectClientButtonVisbility(bool isClientsActive) {
+			if (isClientsActive) {
+				selectClientButton->Enabled= false;
+			}
+			else {
+				selectClientButton->Enabled = true;
+			}
+		}
+		
 	//Funcion para cargar los datos del archivo CSV en el DataGridView cuando se inicialice la pantalla
 	private: Void Clients_Load(System::Object^ sender, System::EventArgs^ e) {
 		LoadCustomerData(filePath, clientsDataGridView);
@@ -374,8 +405,6 @@ namespace ProyectoFinal {
 		clientPhoneText->Text = "";
 		clientEmailText->Text = "";
 	}
-
-
 
 	private: Void modifyClientButton_Click(Object^ sender, EventArgs^ e){
 		// Verificar si hay una fila seleccionada para modificar
@@ -460,6 +489,23 @@ namespace ProyectoFinal {
 		clientAddressText->Text = "";
 		clientPhoneText->Text = "";
 		clientEmailText->Text = "";
+	}
+	private: System::Void selectClientButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (clientsDataGridView->SelectedRows->Count > 0) {
+			DataGridViewRow^ selectedRow = clientsDataGridView->SelectedRows[0];
+			int codigoCliente = Convert::ToInt32(selectedRow->Cells["CódigoCliente"]->Value);
+			String^ nombre = safe_cast<String^>(selectedRow->Cells["Nombre"]->Value);
+			String^ direccion = safe_cast<String^>(selectedRow->Cells["Dirección"]->Value);
+			String^ telefono = safe_cast<String^>(selectedRow->Cells["NúmeroTeléfono"]->Value);
+			String^ correoElectronico = safe_cast<String^>(selectedRow->Cells["CorreoElectrónico"]->Value);
+
+			SelectedClient = gcnew Cliente(codigoCliente, nombre, direccion, telefono, correoElectronico);
+
+			this->Close();
+		}
+		else {
+			MessageBox::Show("Por favor, selecciona un cliente.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 };
 };
