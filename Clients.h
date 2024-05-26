@@ -25,14 +25,14 @@ namespace ProyectoFinal {
 		void ModifyCustomerViewData(DataGridView^ grid); //Modifica los datos del archivo CSV al momento de realizar alguna accion
 		bool IsFileOpen(String^ filePath); //Verifica que el archivo no haya sido abierto por otro programa
 
-		property Cliente^ SelectedClient; //Propiedad para obtener el cliente seleccionado
-
 	public:
 		property int Codigo;
 		property String^ Nombre;
 		property String^ Direccion;
 		property String^ Telefono;
 		property String^ CorreoElectronico;
+		property Cliente^ SelectedClient; //Propiedad para obtener el cliente seleccionado
+
 	protected:
 		~Clients()
 		{
@@ -65,7 +65,7 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::Button^ clearButton;
 	private: System::Windows::Forms::Button^ selectClientButton;
 
-	//Variable de ruta del archivo CSV
+		   //Variable de ruta del archivo CSV
 	private: String^ filePath = "data\\Clientes.csv";
 
 #pragma region Windows Form Designer generated code
@@ -331,16 +331,16 @@ namespace ProyectoFinal {
 #pragma endregion
 	
 	public:
-		Void Clients::SelectClientButtonVisbility(bool isClientsActive) {
+		Void SelectClientButtonVisibility(bool isClientsActive) {
 			if (isClientsActive) {
-				selectClientButton->Enabled= false;
+				selectClientButton->Enabled = false;
 			}
 			else {
 				selectClientButton->Enabled = true;
 			}
 		}
-		
-	//Funcion para cargar los datos del archivo CSV en el DataGridView cuando se inicialice la pantalla
+
+		//Funcion para cargar los datos del archivo CSV en el DataGridView cuando se inicialice la pantalla
 	private: Void Clients_Load(System::Object^ sender, System::EventArgs^ e) {
 		LoadCustomerData(filePath, clientsDataGridView);
 	}
@@ -366,7 +366,7 @@ namespace ProyectoFinal {
 		}
 	}
 
-	//Funcion para agregar los clientes al archivo CSV
+		   //Funcion para agregar los clientes al archivo CSV
 	private: Void addClientButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		// Incrementamos el ID de cliente para el nuevo cliente
 		String^ name = clientNameText->Text;
@@ -406,7 +406,7 @@ namespace ProyectoFinal {
 		clientEmailText->Text = "";
 	}
 
-	private: Void modifyClientButton_Click(Object^ sender, EventArgs^ e){
+	private: Void modifyClientButton_Click(Object^ sender, EventArgs^ e) {
 		// Verificar si hay una fila seleccionada para modificar
 		if (clientsDataGridView->SelectedRows->Count > 0) {
 			DataGridViewRow^ selectedRow = clientsDataGridView->SelectedRows[0];
@@ -458,10 +458,9 @@ namespace ProyectoFinal {
 		}
 	}
 
-	private: Void saveChangesButton_Click(Object ^ sender, EventArgs ^ e) {
+	private: Void saveChangesButton_Click(Object^ sender, EventArgs^ e) {
 		// Guardar los cambios en el archivo CSV utilizando el método existente
-		Clients^ clientsInstance = gcnew Clients();
-		clientsInstance->SaveCustomerData(filePath, clientsDataGridView);
+		SaveCustomerData(filePath, clientsDataGridView);
 	}
 
 	private: Void clientsDataGridView_CellClick(Object^ sender, Windows::Forms::DataGridViewCellEventArgs^ e) {
@@ -483,14 +482,15 @@ namespace ProyectoFinal {
 		clientEmailText->Text = correoElectronico;
 	}
 
-	private: System::Void clearButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: Void clearButton_Click(Object^ sender, EventArgs^ e) {
 		clientCodeText->Text = "";
 		clientNameText->Text = "";
 		clientAddressText->Text = "";
 		clientPhoneText->Text = "";
 		clientEmailText->Text = "";
 	}
-	private: System::Void selectClientButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	public: Void selectClientButton_Click(Object^ sender, EventArgs^ e) {
 		if (clientsDataGridView->SelectedRows->Count > 0) {
 			DataGridViewRow^ selectedRow = clientsDataGridView->SelectedRows[0];
 			int codigoCliente = Convert::ToInt32(selectedRow->Cells["CódigoCliente"]->Value);
@@ -503,9 +503,31 @@ namespace ProyectoFinal {
 
 			this->Close();
 		}
+		else if (clientCodeText->Text != "" && clientNameText->Text != "" && clientAddressText->Text != "" && clientPhoneText->Text != "" && clientEmailText->Text != "") {
+			int codigoCliente = Convert::ToInt32(clientCodeText->Text);
+			String^ nombre = safe_cast<String^>(clientNameText->Text);
+			String^ direccion = safe_cast<String^>(clientAddressText->Text);
+			String^ telefono = safe_cast<String^>(clientPhoneText->Text);
+			String^ correoElectronico = safe_cast<String^>(clientEmailText->Text);
+
+			SelectedClient = gcnew Cliente(codigoCliente, nombre, direccion, telefono, correoElectronico);
+
+			this->Close();
+		}
 		else {
 			MessageBox::Show("Por favor, selecciona un cliente.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 };
+
+	public ref class ClientSelectedEventArgs : public EventArgs
+	{
+	public:
+		property Cliente^ SelectedClient;
+
+		ClientSelectedEventArgs(Cliente^ client)
+		{
+			SelectedClient = client;
+		}
+	};
 };

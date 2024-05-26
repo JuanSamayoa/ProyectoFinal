@@ -1,5 +1,6 @@
 #pragma once
 #include "GlobalVariables.h"
+#include "Producto.h"
 
 namespace ProyectoFinal {
 
@@ -10,6 +11,8 @@ namespace ProyectoFinal {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Text::RegularExpressions;
+	using namespace System::Collections::Generic;
+	using namespace Microsoft::VisualBasic;
 
 	public ref class Inventory : public Form
 	{
@@ -17,13 +20,15 @@ namespace ProyectoFinal {
 		Inventory(void)
 		{
 			InitializeComponent();
+			productos = gcnew List<Producto^>();
 		}
 
 		void LoadInventoryData(String^ filePath, DataGridView^ grid); //Carga los datos del archivo CSV en el DataGridView
 		void SaveInventoryData(String^ filePath, DataGridView^ grid); //Guarda los datos del en el archivo CSV al momento de realizar cualquier accion
 		void ModifyInventoryViewData(DataGridView^ grid); //Modifica los datos del archivo CSV al momento de realizar alguna accion
 		bool IsFileOpen(String^ filePath); //Verifica que el archivo no haya sido abierto por otro programa
-
+		void SaveProductStates(String^ filePath); //Guarda los datos de los productos en el archivo CSV
+		void UpdateProductQuantity(String^ productCode, int productoCompra); //Actualiza la cantidad de un producto en el archivo CSV
 
 	protected:
 		~Inventory()
@@ -56,12 +61,54 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::Label^ productLineLabel;
 	private: System::Windows::Forms::Label^ productCategoryLabel;
 	private: System::Windows::Forms::Label^ productNameLabel;
-
 	private:
 		System::ComponentModel::Container ^components;
+		List<Producto^>^ productos;
 	private: System::Windows::Forms::Button^ clearButton;
+	private: System::Windows::Forms::Button^ selectProductButton;
 		   String^ filePath = "data\\Productos.csv";
 
+	private: String^ InputBox(String^ prompt, String^ title, String^ defaultResponse)
+	{
+		Form^ form = gcnew Form();
+		Label^ label = gcnew Label();
+		TextBox^ textBox = gcnew TextBox();
+		Button^ buttonOk = gcnew Button();
+		Button^ buttonCancel = gcnew Button();
+
+		form->Text = title;
+		label->Text = prompt;
+		textBox->Text = defaultResponse;
+
+		buttonOk->Text = "OK";
+		buttonCancel->Text = "Cancel";
+		buttonOk->DialogResult = System::Windows::Forms::DialogResult::OK;
+		buttonCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+
+		label->SetBounds(9, 20, 372, 13);
+		textBox->SetBounds(12, 36, 372, 20);
+		buttonOk->SetBounds(228, 72, 75, 23);
+		buttonCancel->SetBounds(309, 72, 75, 23);
+
+		label->AutoSize = true;
+		textBox->Anchor = static_cast<AnchorStyles>(AnchorStyles::Right | AnchorStyles::Left);
+		buttonOk->Anchor = AnchorStyles::Bottom | AnchorStyles::Right;
+		buttonCancel->Anchor = AnchorStyles::Bottom | AnchorStyles::Right;
+
+		form->ClientSize = System::Drawing::Size(396, 107);
+		form->Controls->AddRange(gcnew array<Control^> { label, textBox, buttonOk, buttonCancel });
+		form->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+		form->StartPosition = FormStartPosition::CenterScreen;
+		form->MinimizeBox = false;
+		form->MaximizeBox = false;
+		form->AcceptButton = buttonOk;
+		form->CancelButton = buttonCancel;
+		form->TopMost = true;
+
+		System::Windows::Forms::DialogResult dialogResult = form->ShowDialog();
+		return (dialogResult == System::Windows::Forms::DialogResult::OK) ? textBox->Text : nullptr;
+
+	}
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -78,6 +125,7 @@ namespace ProyectoFinal {
 			this->addProductButton = (gcnew System::Windows::Forms::Button());
 			this->inventoryDataGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->inventoryControlBox = (gcnew System::Windows::Forms::GroupBox());
+			this->selectProductButton = (gcnew System::Windows::Forms::Button());
 			this->clearButton = (gcnew System::Windows::Forms::Button());
 			this->productQuantityText = (gcnew System::Windows::Forms::TextBox());
 			this->unitPriceText = (gcnew System::Windows::Forms::TextBox());
@@ -176,6 +224,7 @@ namespace ProyectoFinal {
 			// 
 			// inventoryControlBox
 			// 
+			this->inventoryControlBox->Controls->Add(this->selectProductButton);
 			this->inventoryControlBox->Controls->Add(this->clearButton);
 			this->inventoryControlBox->Controls->Add(this->productQuantityText);
 			this->inventoryControlBox->Controls->Add(this->unitPriceText);
@@ -197,6 +246,16 @@ namespace ProyectoFinal {
 			this->inventoryControlBox->TabIndex = 105;
 			this->inventoryControlBox->TabStop = false;
 			this->inventoryControlBox->Text = L"Control de inventarios";
+			// 
+			// selectProductButton
+			// 
+			this->selectProductButton->Location = System::Drawing::Point(200, 245);
+			this->selectProductButton->Name = L"selectProductButton";
+			this->selectProductButton->Size = System::Drawing::Size(127, 23);
+			this->selectProductButton->TabIndex = 110;
+			this->selectProductButton->Text = L"Seleccionar Producto";
+			this->selectProductButton->UseVisualStyleBackColor = true;
+			this->selectProductButton->Click += gcnew System::EventHandler(this, &Inventory::selectProductButton_Click);
 			// 
 			// clearButton
 			// 
@@ -360,6 +419,15 @@ namespace ProyectoFinal {
 		}
 #pragma endregion
 	
+	public: Void selectProductVisibility(bool isInventoryActive) {
+		if (isInventoryActive) {
+			selectProductButton->Visible = false;
+		}
+		else {
+			selectProductButton->Visible = true;
+		}
+	}
+
 	private: Void Inventory_Load(Object^ sender, EventArgs^ e) {
 		LoadInventoryData(filePath, inventoryDataGridView);
 		productCategoryComboBox->SelectedIndex = 0;
@@ -402,8 +470,6 @@ namespace ProyectoFinal {
 		String^ price = unitPriceText->Text;
 		String^ quantity = productQuantityText->Text;
 
-		
-
 		if (name == "" || category == "" || line == "" || description == "" || price == "" || quantity == "") {
 			MessageBox::Show("Por favor, llene todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
@@ -421,7 +487,6 @@ namespace ProyectoFinal {
 			return;
 		}
 
-		// Aquí incluirías la validación de los datos antes de añadirlos
 		inventoryDataGridView->Rows->Add(inventoryIndex, name, category, line, description, price, quantity);
 
 		// Limpiar los campos después de añadir el producto
@@ -491,8 +556,10 @@ namespace ProyectoFinal {
 	}
 
 	private: Void saveChangesButton_Click(Object^ sender, EventArgs^ e) {
+		//Guardar el estado de los productos
 		Inventory^ inventoryInstance = gcnew Inventory();
 		inventoryInstance->SaveInventoryData(filePath, inventoryDataGridView);
+		SaveProductStates(filePath);
 	}
 
 	private: Void clearButton_Click(Object^ sender, EventArgs^ e) {
@@ -503,6 +570,35 @@ namespace ProyectoFinal {
 		productDescriptionText->Text = "";
 		unitPriceText->Text = "";
 		productQuantityText->Text = "";
+	}
+	
+	private: Void selectProductButton_Click(Object^ sender, EventArgs^ e) {
+		Producto^ producto = gcnew Producto();
+		producto->setCodigoProducto(productCodeText->Text);
+		producto->setNombre(productNameText->Text);
+		producto->setCategoria(productCategoryComboBox->Text);
+		producto->setMarca(productLineText->Text);
+		producto->setDescripcion(productDescriptionText->Text);
+		producto->setPrecioUnitario(unitPriceText->Text);
+		producto->setCantidadStock(productQuantityText->Text);
+
+		// Solicitar la cantidad de productos a comprar
+		String^ cantidadCompra = InputBox("Introduce la cantidad de productos a comprar:", "Cantidad de productos", "1");
+		if (String::IsNullOrEmpty(cantidadCompra)) {
+			return;
+		}
+
+		// Validación de la cantidad con expresión regular
+		if (!Regex::IsMatch(cantidadCompra, "^\\d+$")) {
+			MessageBox::Show("La cantidad debe ser un número entero positivo.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		int productoCompra = Convert::ToInt32(cantidadCompra);
+
+		// Restar la cantidad comprada del stock del producto
+		producto->restarCantidadStock(productoCompra);
+		Close();
 	}
 };
 }

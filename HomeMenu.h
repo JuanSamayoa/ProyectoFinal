@@ -285,7 +285,7 @@ namespace ProyectoFinal {
 				isClientsActive = true;
 				clientsForm = gcnew Clients();
 				clientsForm->MdiParent = this; // Establecer el contenedor MDI como el padre
-				clientsForm->SelectClientButtonVisbility(isClientsActive);
+				clientsForm->SelectClientButtonVisibility(isClientsActive);
 				if (isAdminActive) {
 					usersForm->Close();
 					isAdminActive = false;
@@ -320,6 +320,7 @@ namespace ProyectoFinal {
 				isInventoryActive = true;
 				inventoryForm = gcnew Inventory();
 				inventoryForm->MdiParent = this; // Establecer el contenedor MDI como el padre
+				inventoryForm->selectProductVisibility(isInventoryActive);
 				if (isClientsActive) {
 					clientsForm->Close();
 					isClientsActive = false;
