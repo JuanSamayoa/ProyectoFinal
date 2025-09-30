@@ -29,19 +29,27 @@ namespace ProyectoFinal {
 				delete components;
 			}
 		}
-	private: 
-			System::Windows::Forms::DataGridView^ shoppingCartDataGridView;
-		   System::Windows::Forms::Label^ shoppingCartLabel;
-		   System::Windows::Forms::Button^ addProductToCartButton;
-		   System::ComponentModel::Container^ components;
-		   Clients^ clientsForm;
-		   Inventory^ productsForm;
-		   Cliente^ selectedClient; // Variable para almacenar el cliente seleccionado
+	private: System::Windows::Forms::DataGridView^ shoppingCartDataGridView;
+	private: System::Windows::Forms::Label^ shoppingCartLabel;
+	private: System::Windows::Forms::Button^ addProductToCartButton;
+	private: System::ComponentModel::Container ^components;
+	private: Clients^ clientsForm;
+	private: System::Windows::Forms::Label^ clientNameLabel;
+	private: System::Windows::Forms::Label^ clientName;
+	private: System::Windows::Forms::Label^ clientAddressLabel;
+	private: System::Windows::Forms::Label^ clientEmail;
+	private: System::Windows::Forms::Label^ clientEmailLabel;
+	private: System::Windows::Forms::Label^ clientPhoneNumber;
+	private: System::Windows::Forms::Label^ clientPhoneNumberLabel;
+	private: System::Windows::Forms::Label^ clientBillingDataLabel;
+	private: System::Windows::Forms::Label^ clientAddress;
+	private: Cliente^ selectedClient; // Variable para almacenar el cliente seleccionado
+	private: Inventory^ productsForm;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
+		/// MÃ©todo necesario para admitir el DiseÃ±ador. No se puede modificar
+		/// el contenido de este mÃ©todo con el editor de cÃ³digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -105,7 +113,7 @@ namespace ProyectoFinal {
 		clientsForm = gcnew Clients();
 		clientFormInitialProperties();
 		clientsForm->SelectClientButtonVisibility(false);
-		// Mostrar el formulario Clients después de suscribirse al evento
+		// Mostrar el formulario Clients despuÃ©s de suscribirse al evento
 		clientsForm->Show();
 	}
 
@@ -131,12 +139,36 @@ namespace ProyectoFinal {
 		productsForm->selectProductVisibility(false);
 		productFormInitialProperties();
 		productsForm->Show();
+	}
+
+	public: Void showProductToCart(Producto^ producto, int cantidadCompra) {
+		String^ productCode = producto->getCodigoProducto();
+
+		if (producto != nullptr) {
+			shoppingCartDataGridView->Rows->Add(gcnew array<String^>{
+				producto->getCodigoProducto(),
+				producto->getNombre(),
+				producto->getCategoria(),
+				producto->getMarca(),
+				producto->getDescripcion(),
+				producto->getPrecioUnitario(),
+				//agregar la cantidad que se selecciono en la pantalla de inventario
+			});
+		}
+		else {
+			MessageBox::Show("Producto no encontrado.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 
 	}
 
-	//crear HandleProductSelected
-	private: Void HandleProductSelected(Object^ sender) {
-
+	void InitializeDataGridView() {
+		shoppingCartDataGridView->Columns->Add("CodigoProducto", "CÃ³digo del Producto");
+		shoppingCartDataGridView->Columns->Add("Nombre", "Nombre del Producto");
+		shoppingCartDataGridView->Columns->Add("Categoria", "CategorÃ­a");
+		shoppingCartDataGridView->Columns->Add("Marca", "Marca");
+		shoppingCartDataGridView->Columns->Add("Descripcion", "DescripciÃ³n");
+		shoppingCartDataGridView->Columns->Add("PrecioUnitario", "Precio Unitario");
+		shoppingCartDataGridView->Columns->Add("CantidadStock", "Cantidad Disponible");
 	}
 
 };

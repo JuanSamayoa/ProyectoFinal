@@ -29,6 +29,7 @@ namespace ProyectoFinal {
 		bool IsFileOpen(String^ filePath); //Verifica que el archivo no haya sido abierto por otro programa
 		void SaveProductStates(String^ filePath); //Guarda los datos de los productos en el archivo CSV
 		void UpdateProductQuantity(String^ productCode, int productoCompra); //Actualiza la cantidad de un producto en el archivo CSV
+		Producto^ GetProductByCode(String^ code);
 
 	protected:
 		~Inventory()
@@ -63,7 +64,7 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::Label^ productNameLabel;
 	private:
 		System::ComponentModel::Container ^components;
-		List<Producto^>^ productos;
+	public: List<Producto^>^ productos;
 	private: System::Windows::Forms::Button^ clearButton;
 	private: System::Windows::Forms::Button^ selectProductButton;
 		   String^ filePath = "data\\Productos.csv";
@@ -598,7 +599,8 @@ namespace ProyectoFinal {
 
 		// Restar la cantidad comprada del stock del producto
 		producto->restarCantidadStock(productoCompra);
-		Close();
+		DataGridViewRow^ selectedRow = inventoryDataGridView->SelectedRows[0];
+		selectedRow->Cells["CantidadStock"]->Value = producto->getCantidadStock();
 	}
 };
 }

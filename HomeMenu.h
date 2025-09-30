@@ -3,6 +3,7 @@
 #include "Users.h"
 #include "Inventory.h"
 #include "SalesModule.h"
+#include "FileUpload.h"
 
 namespace ProyectoFinal {
 
@@ -36,6 +37,7 @@ namespace ProyectoFinal {
 	private: Users^ usersForm;
 	private: Inventory^ inventoryForm;
 	private: SalesModule^ salesForm;
+	private: FileUpload^ fileUploadForm;
 
 	protected:
 		~HomeMenu()
@@ -53,7 +55,7 @@ namespace ProyectoFinal {
 	private: System::Windows::Forms::Button^ reportsButton;
 	private: System::Windows::Forms::Button^ exitButton;
 	private: System::Windows::Forms::Button^ fileUploadButton;
-	private: 
+	private:
 		bool isAdminActive = false;
 		bool isInventoryActive = false;
 		bool isReportsActive = false;
@@ -64,7 +66,7 @@ namespace ProyectoFinal {
 	protected:
 
 #pragma region Windows Form Designer generated code
-		
+
 		void InitializeComponent(void)
 		{
 			this->clientButton = (gcnew System::Windows::Forms::Button());
@@ -135,7 +137,6 @@ namespace ProyectoFinal {
 			this->reportsButton->TabIndex = 4;
 			this->reportsButton->Text = L"Reportes";
 			this->reportsButton->UseVisualStyleBackColor = true;
-			this->reportsButton->Click += gcnew System::EventHandler(this, &HomeMenu::reportsButton_Click);
 			// 
 			// exitButton
 			// 
@@ -272,7 +273,7 @@ namespace ProyectoFinal {
 		}
 
 
-	private: 
+	private:
 		Void MenuPrincipal_Load(Object^ sender, EventArgs^ e) {
 			homeDateLabel->Text = DateTime::Now.ToString("dd/MM/yyyy");
 			homeTimeLabel->Text = DateTime::Now.ToString("hh:mm:ss tt");
@@ -281,7 +282,8 @@ namespace ProyectoFinal {
 		Void clientButton_Click(Object^ sender, EventArgs^ e) {
 			if (isClientsActive) {
 				MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-			} else{
+			}
+			else {
 				isClientsActive = true;
 				clientsForm = gcnew Clients();
 				clientsForm->MdiParent = this; // Establecer el contenedor MDI como el padre
@@ -290,13 +292,17 @@ namespace ProyectoFinal {
 					usersForm->Close();
 					isAdminActive = false;
 				}
-				if(isInventoryActive){
+				if (isInventoryActive) {
 					inventoryForm->Close();
 					isInventoryActive = false;
 				}
 				if (isSalesActive) {
 					salesForm->Close();
 					isSalesActive = false;
+				}
+				if (isFileUploadActive) {
+					salesForm->Close();
+					isFileUploadActive = false;
 				}
 				clientsForm->Show();
 			}
@@ -306,88 +312,124 @@ namespace ProyectoFinal {
 			Windows::Forms::DialogResult confirmacion = MessageBox::Show("Desea salir del sistema? Se realizara un cierre de día al momento de cerrar sesión", "Salir del sistema", MessageBoxButtons::OKCancel, MessageBoxIcon::Exclamation);
 			if (confirmacion == System::Windows::Forms::DialogResult::OK) {
 				Application::Exit();
-			} else if (confirmacion == System::Windows::Forms::DialogResult::Cancel) {
-				
-			}
-			
-		}
-
-		private: Void inventoryButton_Click(Object^ sender, EventArgs^ e) {
-			if (isInventoryActive) {
-				MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 			}
 			else {
-				isInventoryActive = true;
-				inventoryForm = gcnew Inventory();
-				inventoryForm->MdiParent = this; // Establecer el contenedor MDI como el padre
-				inventoryForm->selectProductVisibility(isInventoryActive);
-				if (isClientsActive) {
-					clientsForm->Close();
-					isClientsActive = false;
-				}
-				if (isAdminActive) {
-					usersForm->Close();
-					isAdminActive = false;
-				}
-				if (isSalesActive) {
-					salesForm->Close();
-					isSalesActive = false;
-				}
-				inventoryForm->Show();
+				return;
 			}
+
 		}
 
-		private: Void salesButton_Click(Object^ sender, EventArgs^ e) {
-			if (isSalesActive) {
-				MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-			}
-			else {
-				isSalesActive = true;
-				salesForm = gcnew SalesModule();
-				salesForm->MdiParent = this;
-				if (isClientsActive) {
-					clientsForm->Close();
-					isClientsActive = false;
-				}
-				if (isAdminActive) {
-					usersForm->Close();
-					isAdminActive = false;
-				}
-				if (isInventoryActive) {
-					inventoryForm->Close();
-					isInventoryActive = false;
-				}
-				salesForm->Show();
-			}
+	private: Void inventoryButton_Click(Object^ sender, EventArgs^ e) {
+		if (isInventoryActive) {
+			MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		}
-
-		private: Void userAdminButton_Click(Object^ sender, EventArgs^ e) {
+		else {
+			isInventoryActive = true;
+			inventoryForm = gcnew Inventory();
+			inventoryForm->MdiParent = this; // Establecer el contenedor MDI como el padre
+			inventoryForm->selectProductVisibility(isInventoryActive);
+			if (isClientsActive) {
+				clientsForm->Close();
+				isClientsActive = false;
+			}
 			if (isAdminActive) {
-				MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-			} else {
-				isAdminActive = true;
-				usersForm = gcnew Users();
-				usersForm->MdiParent = this; // Establecer el contenedor MDI como el padre
-				if (isClientsActive) {
-					clientsForm->Hide();
-					isClientsActive = false;
-				}
-				if (isInventoryActive) {
-					inventoryForm->Close();
-					isInventoryActive = false;
-				}
-				if (isSalesActive) {
-					salesForm->Close();
-					isSalesActive = false;
-				}
-				usersForm->Show();
+				usersForm->Close();
+				isAdminActive = false;
 			}
+			if (isSalesActive) {
+				salesForm->Close();
+				isSalesActive = false;
+			}
+			if (isFileUploadActive) {
+				salesForm->Close();
+				isFileUploadActive = false;
+			}
+			inventoryForm->Show();
 		}
+	}
+
+	private: Void salesButton_Click(Object^ sender, EventArgs^ e) {
+		if (isSalesActive) {
+			MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+		}
+		else {
+			isSalesActive = true;
+			salesForm = gcnew SalesModule();
+			salesForm->MdiParent = this;
+			if (isClientsActive) {
+				clientsForm->Close();
+				isClientsActive = false;
+			}
+			if (isAdminActive) {
+				usersForm->Close();
+				isAdminActive = false;
+			}
+			if (isInventoryActive) {
+				inventoryForm->Close();
+				isInventoryActive = false;
+			}
+			if (isFileUploadActive) {
+				salesForm->Close();
+				isFileUploadActive = false;
+			}
+			salesForm->Show();
+		}
+	}
+
+	private: Void userAdminButton_Click(Object^ sender, EventArgs^ e) {
+		if (isAdminActive) {
+			MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+		}
+		else {
+			isAdminActive = true;
+			usersForm = gcnew Users();
+			usersForm->MdiParent = this; // Establecer el contenedor MDI como el padre
+			if (isClientsActive) {
+				clientsForm->Hide();
+				isClientsActive = false;
+			}
+			if (isInventoryActive) {
+				inventoryForm->Close();
+				isInventoryActive = false;
+			}
+			if (isSalesActive) {
+				salesForm->Close();
+				isSalesActive = false;
+			}
+			if (isFileUploadActive) {
+				salesForm->Close();
+				isFileUploadActive = false;
+			}
+			usersForm->Show();
+		}
+	}
 
 	private: Void fileUploadButton_Click(Object^ sender, EventArgs^ e) {
-	}
-
-	private: Void reportsButton_Click(Object^ sender, EventArgs^ e) {
-	}
-};
+		if (isFileUploadActive) {
+			MessageBox::Show("El menú ya se encuentra activo.", "Ventana ya abierta", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
+		}
+		else {
+			isFileUploadActive = true;
+			fileUploadForm = gcnew FileUpload();
+			fileUploadForm->MdiParent = this;
+			if (isClientsActive) {
+				clientsForm->Hide();
+				isClientsActive = false;
+			}
+			if (isInventoryActive) {
+				inventoryForm->Close();
+				isInventoryActive = false;
+			}
+			if (isSalesActive) {
+				salesForm->Close();
+				isSalesActive = false;
+			}
+			if (isAdminActive) {
+				usersForm->Close();
+				isAdminActive = false;
+			}
+			fileUploadForm->Show();
+		}
+	};
+	};
 }

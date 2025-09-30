@@ -54,6 +54,9 @@
     <ClInclude Include="Producto.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="FileUpload.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clients.cpp">
@@ -75,6 +78,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="SalesModule.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="FileUpload.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

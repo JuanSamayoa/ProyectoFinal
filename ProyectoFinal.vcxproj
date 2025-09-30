@@ -114,31 +114,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Cliente.h" />
-    <ClInclude Include="Clients.h">
+    <ClInclude Include="Models\Customer.h" />
+    <ClInclude Include="Views\CustomerForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="FileManager.h" />
-    <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="HomeMenu.h">
+    <ClInclude Include="Utils\FileManager.h" />
+    <ClInclude Include="Utils\FileUploadForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Inventory.h">
+    <ClInclude Include="Utils\GlobalVariables.h" />
+    <ClInclude Include="Views\MainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Producto.h" />
+    <ClInclude Include="Views\InventoryForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Models\Product.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SalesModule.h">
+    <ClInclude Include="Views\SalesForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="UserLogin.h">
+    <ClInclude Include="Views\LoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="UserManager.h" />
-    <ClInclude Include="Users.h">
+    <ClInclude Include="Managers\UserManager.h" />
+    <ClInclude Include="Managers\UserForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Usuarios.h" />
+    <ClInclude Include="Managers\Usuarios.h" />
+    <ClInclude Include="Utils\EncryptionHelper.h" />
+    <ClInclude Include="Managers\CustomerManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -150,6 +155,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Clients.resx">
       <DependentUpon>Clients.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileUpload.resx">
+      <DependentUpon>FileUpload.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeMenu.resx">
       <DependentUpon>HomeMenu.h</DependentUpon>
@@ -168,13 +176,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clients.cpp" />
-    <ClCompile Include="Inventory.cpp" />
-    <ClCompile Include="SalesModule.cpp" />
+    <ClCompile Include="Views\CustomerForm.cpp" />
+    <ClCompile Include="Utils\FileUploadForm.cpp" />
+    <ClCompile Include="Views\InventoryForm.cpp" />
+    <ClCompile Include="Views\SalesForm.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="UserManager.cpp" />
-    <ClCompile Include="Users.cpp" />
-    <ClCompile Include="Usuarios.cpp" />
+    <ClCompile Include="Managers\UserManager.cpp" />
+    <ClCompile Include="Managers\UserForm.cpp" />
+    <ClCompile Include="Managers\Usuarios.cpp" />
+    <ClCompile Include="Utils\EncryptionHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProyectoFinal.rc" />

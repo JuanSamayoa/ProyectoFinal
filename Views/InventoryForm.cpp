@@ -220,4 +220,13 @@ namespace ProyectoFinal {
             }
         }
     }
+
+    Producto^ Inventory::GetProductByCode(String^ code) {
+        for each (Producto ^ producto in productos) {
+            if (producto->getCodigoProducto() == code) {
+                return producto;
+            }
+        }
+        return nullptr;
+    }
 }
