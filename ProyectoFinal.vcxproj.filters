@@ -51,12 +51,15 @@
     <ClInclude Include="Cliente.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Producto.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="FileUpload.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+=======
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clients.cpp">

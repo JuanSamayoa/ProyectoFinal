@@ -273,7 +273,11 @@ namespace ProyectoFinal {
 		}
 
 
+<<<<<<< HEAD
 	private:
+=======
+	private: 
+>>>>>>> master
 		Void MenuPrincipal_Load(Object^ sender, EventArgs^ e) {
 			homeDateLabel->Text = DateTime::Now.ToString("dd/MM/yyyy");
 			homeTimeLabel->Text = DateTime::Now.ToString("hh:mm:ss tt");
@@ -287,7 +291,11 @@ namespace ProyectoFinal {
 				isClientsActive = true;
 				clientsForm = gcnew Clients();
 				clientsForm->MdiParent = this; // Establecer el contenedor MDI como el padre
+<<<<<<< HEAD
 				clientsForm->SelectClientButtonVisibility(isClientsActive);
+=======
+				clientsForm->SelectClientButtonVisbility(isClientsActive);
+>>>>>>> master
 				if (isAdminActive) {
 					usersForm->Close();
 					isAdminActive = false;
@@ -316,7 +324,10 @@ namespace ProyectoFinal {
 			else {
 				return;
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 		}
 
 	private: Void inventoryButton_Click(Object^ sender, EventArgs^ e) {
@@ -336,6 +347,7 @@ namespace ProyectoFinal {
 				usersForm->Close();
 				isAdminActive = false;
 			}
+<<<<<<< HEAD
 			if (isSalesActive) {
 				salesForm->Close();
 				isSalesActive = false;
@@ -346,6 +358,11 @@ namespace ProyectoFinal {
 			}
 			inventoryForm->Show();
 		}
+=======
+		}
+
+	private: Void fileUploadButton_Click(Object^ sender, EventArgs^ e) {
+>>>>>>> master
 	}
 
 	private: Void salesButton_Click(Object^ sender, EventArgs^ e) {

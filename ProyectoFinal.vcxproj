@@ -114,8 +114,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Models\Customer.h" />
     <ClInclude Include="Views\CustomerForm.h">
+=======
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cliente.h" />
+    <ClInclude Include="Clients.h">
+>>>>>>> master
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Utils\FileManager.h" />
