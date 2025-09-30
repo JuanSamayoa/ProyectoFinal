@@ -1,6 +1,7 @@
 #include "Inventory.h"
 #include "GlobalVariables.h"
 #include "HomeMenu.h"
+#include "Producto.h"
 #include <fstream>
 #include <string>
 
@@ -79,6 +80,18 @@ namespace ProyectoFinal {
                     // Agregar los datos como nuevas filas al DataGridView
                     grid->Rows->Add(values);
                     inventoryIndex = grid->Rows->Count - 1;
+
+					//Crear un objeto de tipo Producto y agregarlo a la lista de productos
+					Producto^ producto = gcnew Producto();
+					producto->setCodigoProducto(values[0]);
+					producto->setNombre(values[1]);
+					producto->setCategoria(values[2]);
+					producto->setMarca(values[3]);
+					producto->setDescripcion(values[4]);
+					producto->setPrecioUnitario(values[5]);
+					producto->setCantidadStock(values[6]);
+					productos->Add(producto);
+
                 }
             }
         }
@@ -103,8 +116,11 @@ namespace ProyectoFinal {
             }
             writer->WriteLine();
 
+            productos->Clear();
+
             // Escribir los datos
             for (int i = 0; i < grid->Rows->Count; i++) {
+                List<String^>^ rowValues = gcnew List<String^>();
                 for (int j = 0; j < grid->Columns->Count; j++) {
                     // Verificar si la celda tiene un valor
                     if (grid->Rows[i]->Cells[j]->Value != nullptr) {
@@ -112,11 +128,12 @@ namespace ProyectoFinal {
                         String^ value = grid->Rows[i]->Cells[j]->Value->ToString();
 
                         // Checar si necesitamos encerrar el valor en comillas
-                        if (j == 1 || j == 2 || j == 3 || j == 4) { // Asumiendo que las columnas 1, 2, 3 y 4 necesitan estar entrecomilladas
-                            value = "\"" + value->Replace("\"", "\"\"") + "\""; // Escapar las comillas dentro del valor y encerrar el resultado en comillas
+                        if (j == 1 || j == 2 || j == 3 || j == 4) {
+                            value = "\"" + value->Replace("\"", "\"\"") + "\"";
                         }
 
                         writer->Write(value);
+                        rowValues->Add(value);
                     }
 
                     if (j < grid->Columns->Count - 1) {
@@ -124,7 +141,14 @@ namespace ProyectoFinal {
                     }
                 }
                 writer->WriteLine();
+
+                // Crear y agregar el producto a la lista de productos
+                Producto^ producto = gcnew Producto(rowValues[0], rowValues[1], rowValues[2], rowValues[3], rowValues[4], rowValues[5], rowValues[6]);
+                productos->Add(producto);
             }
+
+            // Guardar el estado de los productos
+            SaveProductStates(filePath);
         }
         catch (Exception^ ex) {
             MessageBox::Show("Error al guardar los datos: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -134,6 +158,30 @@ namespace ProyectoFinal {
         }
     }
 
+    void Inventory::SaveProductStates(String^ filePath) {
+        String^ estadoFilePath = Path::ChangeExtension(filePath, ".state");
+
+        StreamWriter^ writer = gcnew StreamWriter(estadoFilePath);
+        try {
+            for each (Producto ^ producto in productos) {
+                writer->WriteLine(
+                    producto->getCodigoProducto() + "," +
+                    producto->getNombre() + "," +
+                    producto->getCategoria() + "," +
+                    producto->getMarca() + "," +
+                    producto->getDescripcion() + "," +
+                    producto->getPrecioUnitario() + "," +
+                    producto->getCantidadStock()
+                );
+            }
+        }
+        catch (Exception^ ex) {
+            MessageBox::Show("Error al guardar los estados de los productos: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+        }
+        finally {
+            writer->Close();
+        }
+    }
 
     void Inventory::ModifyInventoryViewData(DataGridView^ grid) {
         // Verificar si hay una fila seleccionada para modificar
@@ -157,9 +205,28 @@ namespace ProyectoFinal {
             selectedRow->Cells["Descripción"]->Value = productDescription;
             selectedRow->Cells["PrecioUnitario"]->Value = unitPrice;
             selectedRow->Cells["CantidadStock"]->Value = productQuantity;
+
         }
         else {
             MessageBox::Show("Por favor, selecciona una fila para modificar.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
         }
+    }
+
+    void Inventory::UpdateProductQuantity(String^ productCode, int cantidadCompra) {
+        for each (Producto ^ producto in productos) {
+            if (producto->getCodigoProducto() == productCode) {
+                producto->restarCantidadStock(cantidadCompra);
+                break;
+            }
+        }
+    }
+
+    Producto^ Inventory::GetProductByCode(String^ code) {
+        for each (Producto ^ producto in productos) {
+            if (producto->getCodigoProducto() == code) {
+                return producto;
+            }
+        }
+        return nullptr;
     }
 }

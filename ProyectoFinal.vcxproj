@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -114,33 +114,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClInclude Include="Models\Customer.h" />
+    <ClInclude Include="Views\CustomerForm.h">
+=======
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Clients.h">
+>>>>>>> master
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="FileManager.h" />
-    <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="HomeMenu.h">
+    <ClInclude Include="Utils\FileManager.h" />
+    <ClInclude Include="Utils\FileUploadForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Inventory.h">
+    <ClInclude Include="Utils\GlobalVariables.h" />
+    <ClInclude Include="Views\MainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Views\InventoryForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Models\Product.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SalesModule.h">
+    <ClInclude Include="Views\SalesForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="UserLogin.h">
+    <ClInclude Include="Views\LoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="UserManager.h" />
-    <ClInclude Include="Users.h">
+    <ClInclude Include="Managers\UserManager.h" />
+    <ClInclude Include="Managers\UserForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Usuarios.h" />
+    <ClInclude Include="Managers\Usuarios.h" />
+    <ClInclude Include="Utils\EncryptionHelper.h" />
+    <ClInclude Include="Managers\CustomerManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -152,6 +163,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Clients.resx">
       <DependentUpon>Clients.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileUpload.resx">
+      <DependentUpon>FileUpload.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeMenu.resx">
       <DependentUpon>HomeMenu.h</DependentUpon>
@@ -170,26 +184,31 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clients.cpp" />
-    <ClCompile Include="Inventory.cpp" />
-    <ClCompile Include="SalesModule.cpp" />
+    <ClCompile Include="Views\CustomerForm.cpp" />
+    <ClCompile Include="Utils\FileUploadForm.cpp" />
+    <ClCompile Include="Views\InventoryForm.cpp" />
+    <ClCompile Include="Views\SalesForm.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="UserManager.cpp" />
-    <ClCompile Include="Users.cpp" />
-    <ClCompile Include="Usuarios.cpp" />
+    <ClCompile Include="Managers\UserManager.cpp" />
+    <ClCompile Include="Managers\UserForm.cpp" />
+    <ClCompile Include="Managers\Usuarios.cpp" />
+    <ClCompile Include="Utils\EncryptionHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProyectoFinal.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

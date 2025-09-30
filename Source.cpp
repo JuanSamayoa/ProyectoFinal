@@ -1,22 +1,21 @@
-#include "UserLogin.h"
-#include "HomeMenu.h"
-#include "Clients.h"
-#include "GlobalVariables.h"
-#include "Users.h"
+#include "Views/LoginForm.h"
+#include "Views/MainMenu.h"
+#include "Views/CustomerForm.h"
+#include "Utils/GlobalVariables.h"
+#include "Managers/UserForm.h"
 
 using namespace std;
-using namespace ProyectoFinal;
+using namespace SupermarketManagement;
 
-
-int main() {
-
+[STAThreadAttribute] int main()
+{
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
 
-    UserLogin^ userLogin = gcnew UserLogin();
-    HomeMenu^ homeMenu = gcnew HomeMenu();
-    Clients^ clientsMenu = gcnew Clients();
-    Users^ usersMenu = gcnew Users();
+    LoginForm ^ userLogin = gcnew LoginForm();
+    MainMenu ^ homeMenu = gcnew MainMenu();
+    CustomerForm ^ clientsMenu = gcnew CustomerForm();
+    UserForm ^ usersMenu = gcnew UserForm();
 
     Application::Run(userLogin);
 
